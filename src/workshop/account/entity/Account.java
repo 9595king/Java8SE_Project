@@ -52,6 +52,7 @@ public class Account {
 		this.balance -= amount;
 	}
 
+	//Method Overriding
 	@Override
 	public String toString() {
 		return "Account [고객번호=" + custId + ", "
