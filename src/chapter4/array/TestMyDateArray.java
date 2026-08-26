@@ -7,11 +7,11 @@ public class TestMyDateArray {
 	public static void main(String[] args) {
 		TestMyDateArray test = new TestMyDateArray();
 		
-		//1. MyDate 타입 배열선언 및 생성
+		//1.MyDate 타입 배열선언 및 생성
 		MyDate[] dates = new MyDate[3];
 		//2. 배열 채우기
 		//test.fillArray(dates);
-		//date[0] 는 MyDate Type
+		//dates[0] 는 MyDate 타입
 		fillArrayNew(dates);
 		
 		System.out.println(dates[2].getMonth());
