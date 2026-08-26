@@ -10,9 +10,10 @@ public class PersonManager {
 		personManager.fillPersons(persons);
 		personManager.showPersons(persons);
 		//personManager.findByGender(persons, '남');
-			System.out.println(personManager.findByGender(persons, '남') + "명 입니다.");
+		System.out.println(personManager.findByGender(persons, '남') + "명 입니다.");
 		//personManager.findByGender(persons, '여');
-			System.out.println(personManager.findByGender(persons, '여') + "명 입니다.");
+		System.out.println(personManager.findByGender(persons, '여') + "명 입니다.");
+		personManager.showPerson(persons, "김하늘");
 		
 	}
 	
