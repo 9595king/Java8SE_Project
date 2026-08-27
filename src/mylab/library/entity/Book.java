@@ -7,12 +7,10 @@ public class Book {
     private int publishYear;
     private boolean isAvailable;
 
-    // 기본 생성자 (기본적으로 대출 가능)
     public Book() {
         this.isAvailable = true;
     }
 
-    // 모든 필드 초기화 생성자
     public Book(String title, String author, String isbn, int publishYear) {
         this.title = title;
         this.author = author;
@@ -21,7 +19,6 @@ public class Book {
         this.isAvailable = true;
     }
 
-    // Getter / Setter
     public String getTitle() {
         return title;
     }
@@ -58,27 +55,21 @@ public class Book {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    // 도서 대출 처리
     public boolean checkOut() {
-        if (this.isAvailable) {
-            this.isAvailable = false;
+        if (isAvailable) {
+            isAvailable = false;
             return true;
         }
         return false;
     }
 
-    // 도서 반납 처리
     public void returnBook() {
         this.isAvailable = true;
     }
 
     @Override
     public String toString() {
-        return String.format("[%s] %s (저자: %s, 출판년도: %d년) - %s",
-                isbn, title, author, publishYear, isAvailable ? "대출 가능" : "대출 중");
+        return String.format("Book[제목: %s, 저자: %s, ISBN: %s, 출판년도: %d, 대출가능: %s]",
+                title, author, isbn, publishYear, isAvailable ? "가능" : "불가");
     }
 }

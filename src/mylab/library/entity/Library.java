@@ -2,107 +2,92 @@ package mylab.library.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Library {
-    private String name;
     private List<Book> books;
+    private String name;
 
-    // 생성자
     public Library(String name) {
         this.name = name;
         this.books = new ArrayList<>();
     }
 
-    // 도서 추가
+    public String getName() {
+        return name;
+    }
+
     public void addBook(Book book) {
-        if (book != null) {
-            books.add(book);
+        books.add(book);
+    }
+
+    public Book findBookByTitle(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                return book;
+            }
         }
+        return null;
     }
 
-    // 제목으로 도서 검색 (단건)
-    public Book findByTitle(String title) {
-        return books.stream()
-                .filter(book -> book.getTitle().equalsIgnoreCase(title))
-                .findFirst()
-                .orElse(null);
+    public List<Book> findBooksByAuthor(String author) {
+        List<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                result.add(book);
+            }
+        }
+        return result;
     }
 
-    // 저자로 도서 검색 (다건)
-    public List<Book> findByAuthor(String author) {
-        return books.stream()
-                .filter(book -> book.getAuthor().equalsIgnoreCase(author))
-                .collect(Collectors.toList());
+    public Book findBookByISBN(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
+        return null;
     }
 
-    // ISBN으로 도서 검색 (단건)
-    public Book findByISBN(String isbn) {
-        return books.stream()
-                .filter(book -> book.getIsbn().equals(isbn))
-                .findFirst()
-                .orElse(null);
-    }
-
-    // 이전 메서드 명과의 호환성을 위한 래퍼 메서드
-    public Book findBookByTitle(String title) { return findByTitle(title); }
-    public List<Book> findBooksByAuthor(String author) { return findByAuthor(author); }
-    public Book findBookByISBN(String isbn) { return findByISBN(isbn); }
-
-    // ISBN으로 도서 대출
     public boolean checkOutBook(String isbn) {
-        Book book = findByISBN(isbn);
+        Book book = findBookByISBN(isbn);
         if (book != null) {
-            return book.checkOut(); // Book 내부의 checkOut() 호출
+            return book.checkOut();
         }
         return false;
     }
 
-    // ISBN으로 도서 반납
     public boolean returnBook(String isbn) {
-        Book book = findByISBN(isbn);
+        Book book = findBookByISBN(isbn);
         if (book != null && !book.isAvailable()) {
-            book.returnBook(); // Book 내부의 returnBook() 호출
+            book.returnBook();
             return true;
         }
         return false;
     }
 
-    // 대출 가능한 도서 목록 반환
     public List<Book> getAvailableBooks() {
-        return books.stream()
-                .filter(Book::isAvailable)
-                .collect(Collectors.toList());
+        List<Book> available = new ArrayList<>();
+        for (Book book : books) {
+            if (book.isAvailable()) {
+                available.add(book);
+            }
+        }
+        return available;
     }
 
-    // 전체 도서 목록 반환
     public List<Book> getAllBooks() {
-        return new ArrayList<>(books);
+        return books;
     }
 
-    // 모든 도서 갯수 반환
     public int getTotalBooks() {
         return books.size();
     }
 
-    // 대출 가능한 도서 갯수 반환
     public int getAvailableBooksCount() {
-        return (int) books.stream()
-                .filter(Book::isAvailable)
-                .count();
+        return getAvailableBooks().size();
     }
 
-    // 대출 중인 도서 갯수 반환
     public int getBorrowedBooksCount() {
         return getTotalBooks() - getAvailableBooksCount();
-    }
-
-    // Getter / Setter
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
